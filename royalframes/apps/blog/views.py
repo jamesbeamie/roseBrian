@@ -11,7 +11,7 @@ class CreateBlogAPiView(generics.ListCreateAPIView):
     """
         View class to create and fetch comments
     """
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    # permission_classes = (IsAuthenticatedOrReadOnly, )
     serializer_class = BlogSerializer
 
     kweryset = Blog.objects.all()
@@ -19,10 +19,11 @@ class CreateBlogAPiView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         '''This method creates a blog'''
-        blog = request.data['blog']
+        blog = request.data
         serializer = self.serializer_class(data=blog, context={
             'request': request
         })
+        serializer.is_valid()
         serializer.save()
         result = {"message": "blog created"}
         result.update(serializer.data)
