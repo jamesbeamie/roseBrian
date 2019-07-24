@@ -19,14 +19,10 @@ class CreateBlogAPiView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         '''This method creates a blog'''
-        # slug = self.kwargs['slug']
-        # article = self.util.check_article(slug)
         blog = request.data['blog']
         serializer = self.serializer_class(data=blog, context={
             'request': request
         })
-        # author_profile = Profile.objects.get(user=request.user)
-        # serializer.is_valid()
         serializer.save()
         result = {"message": "blog created"}
         result.update(serializer.data)
@@ -35,8 +31,6 @@ class CreateBlogAPiView(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         '''This method gets all blogs'''
-        # slug = self.kwargs['slug']
-        # article = self.util.check_article(slug)
         blogs = self.kweryset
         serializer = self.serializer_class(blogs, context={'request':request}, many=True)
         return Response({"blogs": serializer.data
@@ -55,10 +49,6 @@ class BlogApiView(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, id, *args, **kwargs):
         '''This method gets a single blog by id'''
-
-        # slug = self.kwargs['slug']
-        # article = self.util.check_article(slug)
-        # util = Utils()
         blog = self.util.check_blog(id)
         serializer = self.serializer_class(blog, context={
             'request': request
@@ -67,12 +57,7 @@ class BlogApiView(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, id, *args, **kwargs):
         '''This method deletes a blog'''
-
-        # slug = self.kwargs['slug']
         blog = self.util.check_blog(id)
-        # comment = self.util.check_comment(id)
-
-        # Must implement authentication
         if request.user.pk == blog.author_profile.id:
             self.perform_destroy(blog)
             msg = "deleted_comment"
@@ -87,9 +72,6 @@ class BlogApiView(generics.RetrieveUpdateDestroyAPIView):
 
     def update(self, request, id, *args, **kwargs):
         '''This method updates a comment'''
-
-        # slug = self.kwargs['slug']
-        # article = self.util.check_article(slug)
         blog = self.util.check_blog(id)
         if request.user.pk == blog.author_profile.id:
             existing_field = request.data.copy()

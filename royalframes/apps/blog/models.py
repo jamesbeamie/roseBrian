@@ -5,7 +5,6 @@ class Blog(models.Model):
     slug = models.SlugField(max_length=255)
     title = models.CharField(db_index=True, max_length=255)
     body = models.CharField(db_index=True, max_length=8055)
-    # tags = models.ManyToManyField('articles.Tags')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
