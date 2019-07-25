@@ -7,15 +7,6 @@ class Utils:
 
     """
 
-    # def check_article(self, slug):
-    #     # check if article exists
-    #     try:
-    #         article = Article.objects.get(slug=slug)
-    #         return article
-    #     except Article.DoesNotExist:
-    #         raise NotFound(
-    #             {"error": error_msg["no_slug"]})
-
     def check_blog(self, id):
         # check if Comment exists
         try:
